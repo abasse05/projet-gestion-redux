@@ -4,7 +4,7 @@ from .models import Personne, Nationalite
 
 
 class AdminPersonne(admin.ModelAdmin):
-    list_display = ('nom', 'prenom', 'genre', 'date_naissance', 'nationalite',
+    list_display = ('username', 'nom', 'prenom', 'genre', 'date_naissance', 'nationalite',
                     'numero', 'tel', 'date_enregistrement')
     list_filter = ('genre',)
     search_fields = ('nom', 'prenom', 'genre', 'date_naissance', 'nationalite',

@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 import jwt
 
 from api.models import Personne
-from api.serializers import PersonneSerializer
+from api.serializers import GetPersonneSerializer
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -44,7 +44,7 @@ def getUser(request, id):
     if request.method == 'GET':
         # token = request.COOKIES.get('jwt')
         user = Personne.objects.get(id=id)
-        serializer = PersonneSerializer(user)
+        serializer = GetPersonneSerializer(user)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 

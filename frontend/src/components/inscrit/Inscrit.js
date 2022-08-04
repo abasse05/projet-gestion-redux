@@ -25,7 +25,7 @@ class Inscrit extends Component {
             genre:'',
             email:''
         },
-        optionsNation: []
+        optionsNations: []
 
     }
     
@@ -41,11 +41,14 @@ class Inscrit extends Component {
     }
 
     optionsGenre = [
+            { value: '', label: '' },
             { value: 'M', label: 'Masculin' },
             { value: 'F', label: 'Feminin' }
         ]
-
     
+    optionsNation = []
+    
+
     onSubmit = (e) => {
         e.preventDefault()
         console.log("click : Submit")
@@ -69,32 +72,31 @@ class Inscrit extends Component {
         this.setState({ registerData: registerDataFormat })
     }
 
-    onChangeSelectG = (e) => {
+    onChangeSelect = (e, option) => {
         const registerDataFormat = this.state.registerData
-        registerDataFormat['genre'] = e.value
+        registerDataFormat[option.name] = e !== null ? e.value : ''
         this.setState({ registerData: registerDataFormat })
+        this.setState({optionsNations: []})
     }
 
-    onChangeSelectPays = (e) => {
-        const registerDataFormat = this.state.registerData
-        registerDataFormat['nationalite'] = e.value
-        this.setState({ registerData: registerDataFormat })
-    }
+    // onChangeSelectPays = (e) => {
+    //     const registerDataFormat = this.state.registerData
+    //     registerDataFormat['nationalite'] = e !== null ? e.value : ''
+    //     this.setState({ registerData: registerDataFormat })
+    // }
 
     render() {
 
         this.props.nationName.forEach(element => 
-            this.state.optionsNation.push({
+            this.state.optionsNations.push({
             value:element.id,
             label: element.libelle
         }))
 
+        const optionsNation = this.state.optionsNations
         
-        if(this.registre){
-            this.props.login(this.newUser.username, this.newUser.password)
-            if(this.props.isAuthenticated){
-                return <Redirect to="/index" />
-            }
+        if(this.props.isRegister){
+            return <Redirect to="/" />
         }
 
         return (
@@ -123,7 +125,7 @@ class Inscrit extends Component {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="labels">Genre</label>
-                                <Select classNamePrefix="genre" options={this.optionsGenre} isClearable onChange={this.onChangeSelectG} required/>
+                                <Select classNamePrefix="genre" options={this.optionsGenre} isClearable onChange={this.onChangeSelect} name="genre" required/>
                             </div>
                             <div className="col">
                                 <label className="labels">Date de naissance</label>
@@ -143,7 +145,7 @@ class Inscrit extends Component {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="labels">Nationaté</label>
-                                <Select classNamePrefix="nationalite" options={this.state.optionsNation} onChange={this.onChangeSelectPays} isClearable />
+                                <Select classNamePrefix="nationalite" name="nationalite" options={optionsNation} onChange={this.onChangeSelect} isClearable />
                             </div>
                         </div>
                         <div className="row mt-3">

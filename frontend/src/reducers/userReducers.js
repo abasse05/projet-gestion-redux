@@ -15,7 +15,8 @@ export default function(state = initialState, action){
         case USER_LOADING:
             return {
                 ...state,
-                isLoading: true
+                isLoading: true,
+                isRegister: false
         }
         
         case USER_LOADED:
@@ -23,7 +24,8 @@ export default function(state = initialState, action){
                 ...state,
                 isAuthenticated: true,
                 isLoading: false,
-                user: action.payload
+                user: action.payload,
+                isRegister: false
         }
 
         case AUTH_ERROR:
@@ -38,7 +40,8 @@ export default function(state = initialState, action){
                 token: null,
                 token_refresh: null,
                 user: [],
-                isLoading: false
+                isLoading: false,
+                isRegister: false
         }
     
         case REGISTER_FAIL:
@@ -63,7 +66,8 @@ export default function(state = initialState, action){
                 token: localStorage.getItem('token'),
                 token_refresh: localStorage.getItem('token_refresh'),
                 isAuthenticated: true,
-                isLoading: false
+                isLoading: false,
+                isRegister: false
             }
         case REGISTER_SUCCESS:
             return {
