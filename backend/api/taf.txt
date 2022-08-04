@@ -1,0 +1,11 @@
+### Pour generer un Swagger de l'api
+    - install la librairie drf-yasg (Yet Another Swagger Generetor)
+        pip install drf-yasg
+    - Ajouter drf-yasg à settings.py
+    - copy le contenu de "la page web" dans urls.py (du projet != app)
+    
+    ## pour configurer les urls de login et logout de swagger, mettre dans settings.py
+        SWAGGER_SETTINGS = {
+            'LOGIN': '/admin/login/',
+            'LOGOUT': '/admin/logout/'
+        } 
