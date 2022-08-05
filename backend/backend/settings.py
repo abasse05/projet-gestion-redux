@@ -31,7 +31,8 @@ INSTALLED_APPS = [
     'apiaccount',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_simplejwt.token_blacklist'
+    'rest_framework_simplejwt.token_blacklist',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -202,3 +203,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 JAZZMIN_SETTINGS = JAZZMIN_SETTINGS
+
+SWAGGER_SETTINGS = {
+            'LOGIN_URL': '/admin/login/',
+            'LOGOUT_URL': '/admin/logout/'
+        } 

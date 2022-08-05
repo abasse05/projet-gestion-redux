@@ -27,7 +27,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-
+@permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def getRoutes(request):
     routes = [
