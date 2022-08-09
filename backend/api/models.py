@@ -1,10 +1,11 @@
 from datetime import timezone
-from tkinter import CASCADE
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser
-# Create your models here.
 
+# Create your models here.
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.utils.translation import gettext_lazy as _
+from .manager import CustomAccounManager
 
 class Nationalite(models.Model):
     libelle = models.CharField(max_length=255, blank=True, null=True)
@@ -15,12 +16,13 @@ class Nationalite(models.Model):
     def __str__(self):
         return self.libelle
 
-
-class Personne(AbstractUser):
+class Personne(AbstractBaseUser, PermissionsMixin):
     GENRE = (
         ("M", "Masculin"),
         ("F", "Feminin")
     )
+    email = models.EmailField(_('email address'), blank=True, null=True)
+    username = models.CharField(max_length=150, unique=True)
     nom = models.CharField(max_length=255, null=True,
                            blank=True, verbose_name="Nom")
     prenom = models.CharField(
@@ -37,10 +39,24 @@ class Personne(AbstractUser):
                            blank=True, verbose_name="Telephone")
     archive = models.BooleanField(
         default=False, null=True, blank=True, verbose_name="Archive")
-    date_enregistrement = models.DateTimeField(auto_now_add=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser =  models.BooleanField(default=False) 
+    is_active = models.BooleanField(default=True)
+    date_joined = models.DateTimeField(default=timezone.now)
+
+    objects = CustomAccounManager()
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
 
     class Meta:
-        ordering = ('-date_enregistrement',)  # ranger par ordre decroissant
+        ordering = ('-date_joined',)  # ranger par ordre decroissant
 
     def __str__(self):
-        return "{} {}".format(self.nom, self.prenom)
+        return "user : {}, {} {}".format(self.username, self.nom, self.prenom)
+
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
